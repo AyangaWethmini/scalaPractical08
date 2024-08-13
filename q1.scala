@@ -1,3 +1,5 @@
+import scala.io.StdIn.readLine
+
 object q1 extends App {
 
   def encrypt(shift: Int, str: String): String = {
@@ -17,7 +19,7 @@ object q1 extends App {
 
     for (letter <- str) {
       val base = if (letter.isUpper) 'A' else 'a'
-      val newLetter = (letter.toInt - base.toInt - shift) % 26
+      val newLetter = (letter.toInt - base.toInt - shift + 26) % 26
       cipher += (newLetter + base.toInt).toChar
     }
 
@@ -32,7 +34,16 @@ object q1 extends App {
     function(shift, str)
   }
 
-  
-  println(cipher(encrypt, "Ayanga", 5)) 
-  println(cipher(decrypt, "Fdfslf", 5))
+  val string = readLine("Enter the string: ")
+  val shift = readLine("Enter the shift : ")
+  val shiftInt = shift.toInt
+
+  val action = readLine("Do you want to encrypt or decrypt(e/d) ? ")
+
+  action match {
+    case "e" => println(cipher(encrypt, string, shiftInt))
+    case "d" => println(cipher(decrypt, string, shiftInt))
+    case _   => println("Enter e or d")
+  }
+
 }
